@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+
+    <div class="container mx-auto px-6 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div class="relative animate-fade-in">
+                <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-dark-surface to-dark-border p-8">
+                    <div class="absolute inset-0 bg-gradient-to-br from-accent-blue/10 via-transparent to-accent-purple/10"></div>
+                    <img
+                        src="{{product.image}}?w=600&h=600&fit=crop"
+                        alt="Premium Wireless Headphones"
+                        class="w-full h-96 lg:h-[500px] object-cover rounded-2xl relative z-10 hover:scale-105 transition-transform duration-700"
+                    >
+                </div>
+            </div>
+
+            <div class="animate-slide-right">
+                <h1 class="text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-white via-accent-blue to-white bg-clip-text text-transparent">
+                    {{product.name}}
+                </h1>
+
+                <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+                    {{product.description}}
+                </p>
+
+                <div class="mb-8">
+                    <div class="flex items-baseline space-x-4">
+                        <span class="text-4xl font-bold text-accent-blue">KSH. {{product.price}}</span>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <button class="w-full bg-gradient-to-r from-accent-blue to-accent-purple px-8 py-4 rounded-2xl font-bold text-lg hover:shadow-2xl hover:shadow-accent-blue/25 transition-all duration-300 transform animate-glow">
+                        PURCHASE
+                    </button>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <button class="bg-dark-surface border border-dark-border px-6 py-3 rounded-xl font-semibold hover:border-accent-blue/50 hover:bg-dark-border transition-all duration-300">
+                            Add to Wishlist
+                        </button>
+                        <button class="bg-dark-surface border border-dark-border px-6 py-3 rounded-xl font-semibold hover:border-accent-blue/50 hover:bg-dark-border transition-all duration-300">
+                            Compare
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mt-8 p-6 bg-gradient-to-r from-dark-surface to-dark-border rounded-2xl border border-dark-border">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-sm text-gray-400">Free shipping worldwide</span>
+                        <span class="text-accent-blue text-sm font-semibold">✈️ Fast delivery</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-400">30-day return policy</span>
+                        <span class="text-green-400 text-sm font-semibold">✅ In stock</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

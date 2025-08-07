@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}My Store{% endblock %}
+
+{% block content %}
+    <div id="home" class="relative z-10 container mx-auto px-6 py-20 text-center">
+        <h2 class="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
+            <span class="bg-gradient-to-r from-white via-accent-blue to-accent-purple bg-clip-text text-transparent">
+                Premium Products
+            </span>
+        </h2>
+        <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto animate-slide-up">
+            Discover our curated collection of cutting-edge technology and premium accessories designed for the modern lifestyle.
+        </p>
+        <button class="bg-gradient-to-r from-accent-blue to-accent-purple px-8 py-4 rounded-full font-semibold hover:shadow-lg hover:shadow-accent-blue/25 transition-all duration-300 transform hover:scale-105 animate-glow">
+            Explore Collection
+        </button>
+    </div>
+
+    <section id="products" class="container mx-auto px-6 py-20">
+        <div class="text-center mb-16">
+            <h3 class="text-4xl font-bold mb-4 bg-gradient-to-r from-accent-blue to-accent-purple bg-clip-text text-transparent">
+                Featured Products
+            </h3>
+            <p class="text-gray-400 max-w-2xl mx-auto">
+                Each product is carefully selected for quality, innovation, and style
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for product in products %}
+              <div class="bg-dark-surface border border-dark-border rounded-2xl overflow-hidden group hover:border-accent-blue/50 transition-all duration-300 hover:shadow-xl hover:shadow-accent-blue/10 hover:-translate-y-2">
+                  <div class="relative overflow-hidden">
+                      <img src="{{ product.image }}?w=400&h=300&fit=crop" alt="Wireless Headphones" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
+                      <div class="absolute top-4 right-4">
+                          <div class="w-4 h-4 bg-{{ product.color }} rounded-full shadow-lg"></div>
+                      </div>
+                  </div>
+                  <div class="p-6">
+                      <a href="/products/{{product.id}}" class="text-xl font-semibold mb-2 group-hover:text-accent-blue transition-colors hover:underline">{{ product.name }}</a>
+                      <p class="text-gray-400 text-sm mb-4">High-quality sound with active noise cancellation</p>
+                      <div class="flex justify-between items-center">
+                          <span class="text-2xl font-bold text-accent-blue">KSH. {{ product.price }}</span>
+                          <div class="flex items-center space-x-2">
+                              <span class="text-sm text-gray-400 mr-1">Color: </span> <span class="text-sm">{{product.color}}</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
