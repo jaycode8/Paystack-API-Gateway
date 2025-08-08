@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %} Payment Failed - {{ product.name }} {% endblock %}
+
+{% block content %}
+
+<style>
+    .error-cross {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        display: block;
+        stroke-width: 3;
+        stroke: #ef4444;
+        stroke-miterlimit: 10;
+        margin: 10px auto;
+        box-shadow: inset 0px 0px 0px #ef4444;
+        animation: fill-error .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+    }
+
+    .error-cross__circle {
+        stroke-dasharray: 166;
+        stroke-dashoffset: 166;
+        stroke-width: 3;
+        stroke-miterlimit: 10;
+        stroke: #ef4444;
+        fill: none;
+        animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+    }
+
+    .error-cross__cross {
+        transform-origin: 50% 50%;
+        stroke-dasharray: 48;
+        stroke-dashoffset: 48;
+        animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+    }
+
+    @keyframes stroke {
+        100% { stroke-dashoffset: 0; }
+    }
+
+    @keyframes scale {
+        0%, 100% { transform: none; }
+        50% { transform: scale3d(1.1, 1.1, 1); }
+    }
+
+    @keyframes fill-error {
+        100% { box-shadow: inset 0px 0px 0px 30px #ef4444; }
+    }
+
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+    }
+
+    .animate-shake { animation: shake 0.5s ease-in-out; }
+</style>
+
+<div class="min-h-screen flex items-center justify-center text-white relative overflow-hidden">
+    
+    <div class="container mx-auto px-6 py-12 text-center relative z-10">
+        
+        <div class="animate-shake mb-8">
+            <svg class="error-cross" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                <circle class="error-cross__circle" cx="26" cy="26" r="25" fill="none"/>
+                <path class="error-cross__cross" fill="none" stroke-linecap="round" d="M16,16 L36,36 M36,16 L16,36"/>
+            </svg>
+        </div>
+
+        <div class="animate-fade-in">
+            <h1 class="text-5xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-red-400 via-orange-500 to-red-600 bg-clip-text text-transparent">
+                Payment Failed
+            </h1>
+            
+            <p class="text-2xl text-gray-300 mb-4 animate-fade-in animate-delay-300">
+                We couldn't process your payment 😔
+            </p>
+            
+            <p class="text-lg text-gray-400 mb-12 animate-fade-in animate-delay-600">
+                Don't worry, no charges were made to your account.
+            </p>
+        </div>
+
+        <div class="max-w-2xl mx-auto mb-12 animate-slide-up animate-delay-300">
+            <div class="bg-gradient-to-br from-gray-900/90 to-gray-800/90 backdrop-blur-sm rounded-3xl border border-red-500/20 p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+                    <div>
+                        <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-2">Transaction ID</h3>
+                        <p class="text-xl font-bold text-red-400">#{{ transaction.reference }}</p>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-2">Attempted Amount</h3>
+                        <p class="text-xl font-bold text-gray-300">KSH {{ transaction.amount }}</p>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-2">Payment Method</h3>
+                        <p class="text-lg text-white">{{ transaction.channel }}</p>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-2">Error Code</h3>
+                        <p class="text-lg text-red-400">{{ transaction.gateway_response }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="space-y-4 animate-slide-up animate-delay-600">
+            <div class="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+                <button class="flex-1 bg-gradient-to-r from-red-600 to-orange-600 px-8 py-4 rounded-2xl font-bold text-lg hover:shadow-2xl hover:shadow-red-500/25 transition-all duration-300 transform">
+                    Try Again
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('button').addEventListener('click', function() {
+            window.location.href = '/products/{{ product.id }}';
+        });
+    </script>
+</div>
+{% endblock %}

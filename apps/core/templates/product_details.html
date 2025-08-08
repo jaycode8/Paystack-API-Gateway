@@ -33,10 +33,11 @@
                 </div>
 
                 <div class="space-y-4">
-                    <button class="w-full bg-gradient-to-r from-accent-blue to-accent-purple px-8 py-4 rounded-2xl font-bold text-lg hover:shadow-2xl hover:shadow-accent-blue/25 transition-all duration-300 transform animate-glow">
-                        PURCHASE
-                    </button>
-
+                    <form method="post" action={{ purchase_link }}>
+                        <button type="submit" class="w-full bg-gradient-to-r from-accent-blue to-accent-purple px-8 py-4 rounded-2xl font-bold text-lg hover:shadow-2xl hover:shadow-accent-blue/25 transition-all duration-300 transform animate-glow">
+                            PURCHASE
+                        </button>
+                    </form>
                     <div class="grid grid-cols-2 gap-4">
                         <button class="bg-dark-surface border border-dark-border px-6 py-3 rounded-xl font-semibold hover:border-accent-blue/50 hover:bg-dark-border transition-all duration-300">
                             Add to Wishlist

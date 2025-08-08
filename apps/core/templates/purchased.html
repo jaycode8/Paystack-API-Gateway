@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %} purchased {{ product.name }} {% endblock %}
+
+{% block content %}
+
+<style>
+    .success-checkmark {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        display: block;
+        stroke-width: 3;
+        stroke: #10b981;
+        stroke-miterlimit: 10;
+        margin: 10px auto;
+        box-shadow: inset 0px 0px 0px #10b981;
+        animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+    }
+
+    .success-checkmark__circle {
+        stroke-dasharray: 166;
+        stroke-dashoffset: 166;
+        stroke-width: 3;
+        stroke-miterlimit: 10;
+        stroke: #10b981;
+        fill: none;
+        animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+    }
+
+    .success-checkmark__check {
+        transform-origin: 50% 50%;
+        stroke-dasharray: 48;
+        stroke-dashoffset: 48;
+        animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+    }
+
+    @keyframes stroke {
+        100% { stroke-dashoffset: 0; }
+    }
+
+    @keyframes scale {
+        0%, 100% { transform: none; }
+        50% { transform: scale3d(1.1, 1.1, 1); }
+    }
+
+    @keyframes fill {
+        100% { box-shadow: inset 0px 0px 0px 30px #10b981; }
+    }
+</style>
+<div class="min-h-screen flex items-center justify-center text-white relative overflow-hidden">
+
+    <div class="container mx-auto px-6 py-12 text-center relative z-10">
+
+        <div class="animate-bounce-in mb-8">
+            <svg class="success-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                <circle class="success-checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                <path class="success-checkmark__check" fill="none" d="m16,26 9,9 16,-16"/>
+            </svg>
+        </div>
+
+        <div class="animate-fade-in">
+            <h1 class="text-5xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
+                Payment Successful!
+            </h1>
+
+            <p class="text-2xl text-gray-300 mb-4 animate-fade-in animate-delay-300">
+                Thank you for your purchase! 🎉
+            </p>
+
+            <p class="text-lg text-gray-400 mb-12 animate-fade-in animate-delay-600">
+                Your order has been confirmed and will be processed shortly.
+            </p>
+        </div>
+
+        <div class="max-w-2xl mx-auto mb-12 animate-slide-up animate-delay-300">
+            <div class="bg-gradient-to-br from-gray-900/90 to-gray-800/90 backdrop-blur-sm rounded-3xl border border-gray-700 p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+                    <div>
+                        <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-2">Order Number</h3>
+                        <p class="text-xl font-bold text-blue-400">#{{ transaction.metadata.order_number }}</p>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-2">Total Amount</h3>
+                        <p class="text-xl font-bold text-green-400">KSH {{ transaction.amount }}</p>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-2">Payment Method</h3>
+                        <p class="text-lg text-white">{{ transaction.channel }}</p>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-2">Estimated Delivery</h3>
+                        <p class="text-lg text-white">1-3 Business Days</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        setTimeout(() => {
+            document.querySelectorAll('.confetti').forEach((confetti, index) => {
+                confetti.style.animationDelay = (index * 0.1) + 's';
+            });
+        }, 1000);
+    </script>
+</div>
+{% endblock %}
