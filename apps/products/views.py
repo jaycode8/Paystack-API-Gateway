@@ -8,6 +8,7 @@ from uuid import uuid4, UUID
 from ..core.paystack import checkout, confirmation
 from ..core.services import generate_order_number
 from ..core.serializers import TransactionSerializer
+from ..core.models import Transaction
 
 # Create your views here.
 
@@ -55,9 +56,10 @@ class ProductsViewSet(ModelViewSet):
                 "customer_code": tx_data["customer"]["customer_code"],
             }
 
-            serializer = TransactionSerializer(data=transaction_payload)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
+            if not Transaction.objects.filter(pk=transaction_payload["id"]).exists():
+                serializer = TransactionSerializer(data=transaction_payload)
+                serializer.is_valid(raise_exception=True)
+                serializer.save()
 
             return render(request, "purchased.html", {"product": product, "transaction": tx_data})
 

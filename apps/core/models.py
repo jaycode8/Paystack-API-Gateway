@@ -25,7 +25,6 @@ class Transaction(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
 
     def amount_display(self):
-        """Return formatted amount in main currency unit."""
         return f"{self.amount / 100:,.2f}"
 
     def __str__(self):
