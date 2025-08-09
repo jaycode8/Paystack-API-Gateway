@@ -4,11 +4,9 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from .models import Product
 from .serializers import ProductSerializer
-from uuid import uuid4, UUID
+from uuid import uuid4
 from ..core.paystack import checkout, confirmation
 from ..core.services import generate_order_number
-from ..core.serializers import TransactionSerializer
-from ..core.models import Transaction
 
 # Create your views here.
 
@@ -31,37 +29,7 @@ class ProductsViewSet(ModelViewSet):
         verify = confirmation(reference)
 
         if verify.get("status") and verify["data"]["status"] == "success":
-            tx_data = verify["data"]
-
-            transaction_payload = {
-                "id": UUID(tx_data["metadata"]["sale_id"]),
-                "status": tx_data["status"],
-                "paystack_id": tx_data["id"],
-                "reference": tx_data["reference"],
-                "amount": tx_data["amount"],
-                "currency": tx_data["currency"],
-                "gateway_response": tx_data["gateway_response"],
-                "paid_at": tx_data["paid_at"],
-                "created_at": tx_data["created_at"],
-                "channel": tx_data["channel"],
-                "ip_address": tx_data.get("ip_address"),
-                "product_id": UUID(tx_data["metadata"]["product_id"]),
-                "user_id": int(tx_data["metadata"]["user_id"]),
-                "order_number": tx_data["metadata"]["order_number"],
-                "fees": tx_data["fees"],
-                "card_type": tx_data["authorization"]["card_type"],
-                "last4": tx_data["authorization"]["last4"],
-                "bank": tx_data["authorization"]["bank"],
-                "customer_email": tx_data["customer"]["email"],
-                "customer_code": tx_data["customer"]["customer_code"],
-            }
-
-            if not Transaction.objects.filter(pk=transaction_payload["id"]).exists():
-                serializer = TransactionSerializer(data=transaction_payload)
-                serializer.is_valid(raise_exception=True)
-                serializer.save()
-
-            return render(request, "purchased.html", {"product": product, "transaction": tx_data})
+            return render(request, "purchased.html", {"product": product, "transaction": verify["data"]})
 
         return render(request, "failed.html", {"product": product})
 

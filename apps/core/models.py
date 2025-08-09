@@ -25,7 +25,7 @@ class Transaction(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
 
     def amount_display(self):
-        return f"{self.amount / 100:,.2f}"
+        return f"{self.amount:,.2f}"
 
     def __str__(self):
         return f"{self.order_number} - {self.reference}"
